@@ -1,23 +1,58 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
+    <div id="app">
+      <v-app id="inspire">
+        <v-navigation-drawer v-model="drawerRight" app clipped right>
+          <v-list dense>
+            <v-list-item @click.stop="right = !right">
+              <v-list-item-action>
+                <v-icon>exit_to_app</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Open Temporary Drawer</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+        <v-app-bar app clipped-right color="blue-grey" dark>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-toolbar-title>Toolbar</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-app-bar-nav-icon @click.stop="drawerRight = !drawerRight"></v-app-bar-nav-icon>
+        </v-app-bar>
+
+        <v-navigation-drawer v-model="drawer" app>
+          <v-list dense>
+            <v-list-item>
+              <router-link to='/route' active-class='active'>
+              <a>livres</a></router-link>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+
+        <v-navigation-drawer v-model="left" fixed temporary></v-navigation-drawer>
+
+        <v-content>
+          <v-container fluid fill-height>
+            <v-layout justify-center align-center>
+              <v-flex shrink>
+                <HelloWorld />
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <router-view/>>
+        </v-content>
+
+        <v-navigation-drawer v-model="right" fixed right temporary></v-navigation-drawer>
+
+        <v-footer app color="blue-grey" class="white--text">
+          <span>Vuetify</span>
+          <v-spacer></v-spacer>
+          <span>&copy; 2019</span>
+        </v-footer>
+      </v-app>
+    </div>
   </v-app>
 </template>
 
@@ -30,7 +65,10 @@ export default {
     HelloWorld
   },
   data: () => ({
-    //
+    drawer: null,
+    drawerRight: null,
+    right: false,
+    left: false
   })
 }
 </script>

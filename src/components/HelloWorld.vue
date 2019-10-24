@@ -1,82 +1,77 @@
 <template>
-  <v-form v-model="valid">
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="firstname"
-            :rules="nameRules"
-            :counter="10"
-            label="First name"
-            required
-          ></v-text-field>
-        </v-col>
+  <v-form ref="form" v-models="valid" lazy-validation>
+    <v-img  src='http://www.rhcompetence.com/wp-content/uploads/2019/03/Biblioth%C3%A8que-en-Ligne.jpg'></v-img>
+    <v-text-field
+      v-model="Firstname"
+      :counter="10"
+      :rules="FirstnamenameRules"
+      label="FirstName"
+      required
+    ></v-text-field>
 
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="lastname"
-            :rules="nameRules"
-            :counter="10"
-            label="Last name"
-            required
-          ></v-text-field>
-        </v-col>
+    <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required></v-text-field>
+    <v-text-field
+      v-model="StudentNumber"
+      :rules="StudentNumberRules"
+      label="StudentNumber"
+      required
+    ></v-text-field>
+    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
-        <v-col cols="12" md="4">
-          <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-checkbox
+      v-model="checkbox"
+      :rules="[v => !!v || 'You must agree to continue!']"
+      label="Do you agree?"
+      required
+    ></v-checkbox>
+
+    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">Validate</v-btn>
+
+    <v-btn color="error" class="mr-4" @click="restart">restart</v-btn>
+
+    <v-btn color="warning" @click="Quit">Quit</v-btn>
+
   </v-form>
 </template>
-First name
+
 <script>
 export default {
   data: () => ({
-    valid: false,
-    firstname: '',
-    lastname: '',
+    valid: true,
+    Firstname: '',
+    FirstnameRules: [
+      v => !!v || 'FirstName is required',
+      v => (v && v.length <= 10) || 'FisrtName must be less than 10 characters'
+    ],
+    name: '',
     nameRules: [
       v => !!v || 'Name is required',
-      v => v.length <= 10 || 'Name must be less than 10 characters'
+      v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+    ],
+    StudentNumber: '',
+    StudentNumberlRules: [
+      v => !!v || 'StudentNumber is required',
+      v => /.+@.+\..+/.test(v) || 'StudentNumber must be valid'
     ],
     email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
     ]
-  })
-}
-</script>
+  }),
 
-<script>
-import { required, minLength } from 'vuelidate/lib/validators'
-export default {
-  data() {
-    return {
-      name: '',
-      submitStatus: null
-    }
-  },
-  validations: {
-    name: {
-      required,
-      minLength: minLength(4)
-    }
-  },
   methods: {
-    submit() {
-      console.log('submit!')
-      this.$v.$touch()
-      if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR'
-      } else {
-        // do your submit logic here
-        this.submitStatus = 'PENDING'
-        setTimeout(() => {
-          this.submitStatus = 'OK'
-        }, 500)
+    validate () {
+      if (this.$refs.form.validate()) {
+        this.snackbar = true
       }
+    },
+    restart () {
+      this.$refs.form.restart()
+    },
+    Quit () {
+      this.$refs.form.Quit()
     }
   }
 }
+</script>
