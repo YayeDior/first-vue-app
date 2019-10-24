@@ -17,7 +17,7 @@
 
         <v-app-bar app clipped-right color="blue-grey" dark>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title>Toolbar</v-toolbar-title>
+          <v-toolbar-title>Bienvenue sur votre espace d'emprunt Matériels ESIEA</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-app-bar-nav-icon @click.stop="drawerRight = !drawerRight"></v-app-bar-nav-icon>
         </v-app-bar>
@@ -26,7 +26,7 @@
           <v-list dense>
             <v-list-item>
               <router-link to='/route' active-class='active'>
-              <a>livres</a></router-link>
+              <a>Matériels</a></router-link>
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
@@ -41,7 +41,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-          <router-view/>>
+          <router-view/>
         </v-content>
 
         <v-navigation-drawer v-model="right" fixed right temporary></v-navigation-drawer>
